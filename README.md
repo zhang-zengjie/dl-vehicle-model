@@ -21,3 +21,7 @@ In \utils\process_data we will split the data into desired format. In this proje
 * We adopt MSE as our loss function and the function is defined in \utils\neural_network.py
 * In file Training.py we designed the training process and we can change the epoch value to evalute the training performance.
 * The file visualization helps to intuitive visualize the training performance. 
+
+pip install torch==1.4.0+cpu torchvision==0.5.0+cpu -f https://download.pytorch.org/whl/torch_stable.html
+
+pip install future
