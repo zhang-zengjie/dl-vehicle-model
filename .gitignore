@@ -1,2 +1,5 @@
 */__pycache_/
 */.idea/
+*.pt
+*.pth
+*.bag
