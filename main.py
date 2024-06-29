@@ -1,4 +1,4 @@
-import torch
+import torch, os
 torch.manual_seed(42)
 
 
@@ -32,7 +32,8 @@ if __name__ == "__main__":
         train_data, valid_data, test_data = data_generate(history_len=50,
                                                           pred_horizon=1,
                                                           split_ratio=(0.6, 0.2, 0.2),
-                                                          data_dir='F1tenth-real-data')
+                                                          data_dir=os.getcwd(),
+                                                          visualize=False)
         
         _, labels, predictions = get_policy(train_data, valid_data, test_data, 
                                        data_dim=1,

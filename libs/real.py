@@ -14,7 +14,10 @@ dataset_dir = 'datasets'
 
 def read_bag(bag_file):
 
-    bag = rosbag.Bag(bag_file)
+    try:
+        bag = rosbag.Bag(bag_file)
+    except:
+        print('Could not find ROS bag files. Please make sure data have been downloaded from https://zenodo.org/records/12536536.')
 
     twist = np.array([[t.to_nsec(), math.sqrt(msg.twist.linear.x**2 + msg.twist.linear.y**2)] for  _, msg, t in bag.read_messages(topics=[twist_topic])]).T
     cmd = np.array([[t.to_nsec(), msg.linear.x] for _, msg, t in bag.read_messages(topics=[cmd_topic])]).T
@@ -37,6 +40,15 @@ def gen_zeros(history_len, pred_horizon, N):
                 for i in range(N)]
 
 
+def find_bag_files(root_folder):
+    bag_files = []
+    for root, _, files in os.walk(root_folder):
+        for file in files:
+            if file.endswith('.bag'):
+                bag_files.append(os.path.join(root, file))
+    return bag_files
+
+
 def extract(history_len, pred_horizon, data_dir, draw=True):
 
     if not os.path.exists(dataset_dir):
@@ -50,14 +62,18 @@ def extract(history_len, pred_horizon, data_dir, draw=True):
 
         dataset = []
 
-        for file in os.listdir(data_dir):
+        for file in find_bag_files(data_dir):
+
             v_in, v_out = read_bag(os.path.join(data_dir, file))
             dataset += gen_samples(history_len, pred_horizon, v_in, v_out)
 
             if draw:
                 ts = np.arange(len(v_in))
-                plt.plot(ts, v_in)
-                plt.plot(ts, v_out, linestyle='dotted')
+                plt.figure(figsize=(7.5, 5))
+                plt.plot(ts, v_in, label="Commanded velocity")
+                plt.plot(ts, v_out, linestyle='dotted', label="Actual velocity")
+                plt.grid(True, linestyle='--', linewidth=0.5)
+                plt.legend()
                 plt.show()
             
         dataset += gen_zeros(history_len, pred_horizon, len(dataset))
@@ -66,9 +82,9 @@ def extract(history_len, pred_horizon, data_dir, draw=True):
     return dataset
 
 
-def data_generate(history_len, pred_horizon, split_ratio, data_dir, visualize=False):
+def data_generate(history_len, pred_horizon, split_ratio, data_dir, visualize=True):
 
-    print("Loading data ...")
+    print("Loading data ... May take some time ...")
     dataset = extract(history_len, pred_horizon, data_dir, draw=visualize)
 
     print("Shuffling data ...")
