@@ -2,10 +2,7 @@ import torch, os
 torch.manual_seed(42)
 
 
-if __name__ == "__main__":
-
-    from libs.common import get_policy
-    mode = 'fit_model'
+def train_model(mode):
 
     if mode == 'predict_trajectory':
 
@@ -50,3 +47,16 @@ if __name__ == "__main__":
     else:
 
         print("Invalid mode! Please specify between 'predict_trajectory' and 'fit_model'.")
+
+
+if __name__ == "__main__":
+
+    from libs.common import get_policy
+    mode = 'fit_model'
+    ## Choose in which mode the vehicle model is to be generated:
+    ## 1. 'fit_model': generating a dynamic model for the vehicle
+    ## 2. 'predict_trajectory': predict the motion of the vehicle given historical trajectories
+    ## Otherwise, the program gives an error information
+
+    train_model(mode)
+    
