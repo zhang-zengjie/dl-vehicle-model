@@ -1,4 +1,81 @@
-# Deep Learning Based Trajectory Prediction Submodule
+# Modeling and Motion Prediction of Autonomous Vehicles Using Deep Learning
+
+**Author:** Zengjie Zhang (z.zhang3@tue.nl)
+
+A Python project demonstrating how to use recursive neural network (RNN) to approximate the dynamic model of an autonomous vehicle and predict its motion.
+
+## Information
+
+### Associated Research Work
+
+This library is associated with the Arxiv article in [https://arxiv.org/abs/2310.02843](https://arxiv.org/abs/2310.02843).
+
+## Installation
+
+### System Requirements
+
+**Operating system**
+ - *Windows* (compatible in general, succeed on 11)
+
+**Python Environment**
+ - Python version: test passed on `python=3.11`
+ - **Recommended**: IDE ([VS code](https://code.visualstudio.com/) or [Pycharm](https://www.jetbrains.com/pycharm/)) and [Conda](https://www.anaconda.com/)
+ - Required Packages: `numpy`, `treelib`, `matplotlib`, `scipy`. 
+ 
+**Required Libraries**
+ - `gurobipy` solver (**license** required, see [How to Get a Gurobi License](https://www.gurobi.com/solutions/licensing/))
+ - `Python control` toolbox (see [Documentation](https://python-control.readthedocs.io/en/latest/intro.html))
+ 
+**Required Dataset**
+
+This demo requires the ROS bag files in the [*Driving Data of a Real F1tenth Car*](https://zenodo.org/records/12536536) dataset. Download the `*.bag` files in this dataset and save them in a subfolder in this directory. The program will automatically locate these data files.
+
+### Quick Installation
+ 
+1. Install conda following this [instruction](https://conda.io/projects/conda/en/latest/user-guide/install/index.html);
+
+2. Open the conda shell, and create an independent project environment;
+```
+conda create --name ram-ruts python=3.11
+```
+
+3. In the same shell, activate the created environment
+```
+conda activate ram-ruts
+```
+
+4. In the same shell, within the `ram-ruts` environment, install the dependencies one by one
+ ```
+conda install -c anaconda numpy
+conda install -c conda-forge treelib
+conda install -c conda-forge matplotlib
+conda install -c anaconda scipy
+```
+
+5. In the same shell, within the `ram-ruts` environment, install the libraries
+```
+python -m pip install gurobipy
+pip install control
+```
+
+6. Last but not least, activate the `gurobi` license (See [How To](https://www.gurobi.com/documentation/current/remoteservices/licensing.html)). Note that this project is compatible with `gurobi` Released version `11.0.1`. Keep your `gurobi` updated in case of incompatibility. 
+
+### Running Instructions
+
+- Run the main script `main.py`;
+- Watch the terminal for runtime information;
+- The figures will show up at the end of running; They are also automatically saved in the root directory;
+- The figures may impede each other; Drag the figures for a better view;
+- Check out the logging file `INFO.log` for the runtime information.
+
+### Fine-Tuning the Code
+
+Feel free to try out the code with different parameter settings in the `commons/configs.py` file.
+
+- Change the coordinates of the regions in the `RG` dictionary to construct a different map;
+- Change the color map in the `CM` dictionary for preferred layout;
+- Change the standard deviation variable `Sigma` for different noise levels;
+
 
 In this part we have designed a deep learning based trajectory prediction submodule.
 
