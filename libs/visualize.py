@@ -6,16 +6,16 @@ figure_dir = 'figures'
 
 def visualize_test_1D_distribution(labels, predictions):
 
-    plt.figure(figsize=(5, 5))
+    plt.figure(figsize=(3.6, 3.2))
     for i in range(len(labels)):
-        plt.plot(labels[i][:, 0, 0], predictions[i][:, 0, 0], "bo")
-    plt.plot([-0.5, 5.5], [-0.5, 5.5], 'r', linewidth=2, linestyle='-.', label='Zero error')
+        plt.plot(labels[i][:, 0, 0], predictions[i][:, 0, 0], "bo", markerfacecolor='none', alpha=0.5)
+    plt.plot([-0.2, 4.2], [-0.2, 4.2], 'r', linewidth=2, linestyle='-.', label='Zero error')
     plt.grid(True)
     plt.axis("equal")
     plt.xlabel("Ground Truth", fontsize=12)
     plt.ylabel("Prediction", fontsize=12)
-    plt.xlim(-0.5, 5.5)
-    plt.ylim(-0.5, 5.5) 
+    plt.xlim(-0.2, 4.2)
+    plt.ylim(-0.2, 4.2) 
     plt.legend()
     
     if not os.path.exists(figure_dir):
@@ -42,5 +42,5 @@ def visualize_test_2D_trajectory(sample, label, prediction):
         os.makedirs(figure_dir)
 
     plt.subplots_adjust(top=0.88, bottom=0.272, left=0.076, right=0.996)
-    plt.savefig(os.path.join(figure_dir, 'dl_prediction_test.svg'), format='svg')
+    plt.savefig(os.path.join(figure_dir, 'dl_prediction_test.svg'), format='svg', bbox_inches='tight', pad_inches=0.1, transparent=True)
     plt.show()
